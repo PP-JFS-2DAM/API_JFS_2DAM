@@ -17,14 +17,12 @@ public class Receipt {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long receipt_id;
+
     @Column
-    @NotBlank
     private double price;
     @Column
-    @NotBlank
     private double discount;
     @Column
-    @NotBlank
     private LocalDate date;
 
     @OneToOne

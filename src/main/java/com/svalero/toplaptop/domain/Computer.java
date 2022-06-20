@@ -16,6 +16,7 @@ public class Computer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long computer_id;
+
     @Column
     @NotBlank
     private String brand;
@@ -27,7 +28,7 @@ public class Computer {
     @Column
     private boolean isRepaired;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
