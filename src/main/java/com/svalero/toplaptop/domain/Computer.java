@@ -1,11 +1,13 @@
 package com.svalero.toplaptop.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -31,5 +33,9 @@ public class Computer {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "computer")
+    @JsonBackReference(value = "computer-order")
+    private List<Order> orders;
 
 }

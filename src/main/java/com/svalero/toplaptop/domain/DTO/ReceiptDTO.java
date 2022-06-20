@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
-public class Receipt {
+public class ReceiptDTO {
 
     private long order;
     private double price;

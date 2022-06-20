@@ -8,7 +8,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 
-public class Order {
+public class OrderDTO {
     private long computer;
     private long technical;
     private String description;

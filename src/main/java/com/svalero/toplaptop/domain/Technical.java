@@ -1,11 +1,13 @@
 package com.svalero.toplaptop.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -25,7 +27,10 @@ public class Technical {
     @NotBlank
     private String DNI;
     @Column
-    @NotBlank
     private boolean isAvailable;
+
+    @OneToMany(mappedBy = "technical")
+    @JsonBackReference(value = "technical-order")
+    private List<Order> orders;
 
 }
