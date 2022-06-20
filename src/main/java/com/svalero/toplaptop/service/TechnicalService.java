@@ -8,24 +8,14 @@ import java.util.List;
 
 public interface TechnicalService {
 
-
-
-
     List<Technical> findAll();
 
     Technical findById(long id) throws TechnicalNotFoundException;
 
-
-    Technical addTechnical(TechnicalDTO technicalDTO) throws TechnicalNotFoundException;
+    Technical addTechnical(Technical technical);
 
     Technical deleteTechnical(long id) throws TechnicalNotFoundException;
 
-    Technical modifyTechnical(long id, TechnicalDTO technicalDTO) throws TechnicalNotFoundException, OrderNotFoundException;
-
-    Technical modifyName(long id, String name) throws TechnicalNotFoundException;
-
-
-
-
+    Technical modifyTechnical(long id, Technical technical) throws TechnicalNotFoundException;
 
 }

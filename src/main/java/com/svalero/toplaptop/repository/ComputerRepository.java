@@ -10,4 +10,5 @@ import java.util.List;
 public interface ComputerRepository extends CrudRepository<Computer, Long> {
 
     List<Computer> findAll();
+
 }
