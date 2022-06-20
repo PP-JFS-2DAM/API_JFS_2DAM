@@ -28,4 +28,6 @@ public class Receipt {
     @OneToOne
     @JoinColumn(name = "order_id")
     private Order order;
+
+
 }

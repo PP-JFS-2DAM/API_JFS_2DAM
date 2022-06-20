@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class Computer {
+public class ComputerDTO {
     private String brand;
     private String model;
     private int ram;
