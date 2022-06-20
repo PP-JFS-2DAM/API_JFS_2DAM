@@ -23,11 +23,13 @@ public class Order {
     @NotNull
     private LocalDate orderDate;
 
-
-
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "computer_id")
     private Computer computer;
+
+    @OneToOne
+    @JoinColumn(name = "receipt_id") //Duda Santi
+    private Receipt receipt;
 
     @ManyToOne
     @JoinColumn(name = "technical_id")

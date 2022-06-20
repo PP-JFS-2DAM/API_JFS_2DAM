@@ -1,11 +1,13 @@
 package com.svalero.toplaptop.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -29,4 +31,7 @@ public class User {
     @Column
     private boolean isVIP;
 
+    @OneToMany(mappedBy = "user")
+    @JsonBackReference(value = "user-computer")
+    private List<Computer> computers;
 }
