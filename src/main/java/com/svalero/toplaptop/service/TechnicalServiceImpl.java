@@ -1,9 +1,7 @@
 package com.svalero.toplaptop.service;
 
-import com.svalero.toplaptop.domain.Order;
 import com.svalero.toplaptop.domain.Technical;
 import com.svalero.toplaptop.exception.TechnicalNotFoundException;
-import com.svalero.toplaptop.repository.OrderRepository;
 import com.svalero.toplaptop.repository.TechnicalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,15 +9,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class TechnicalServiceImpl implements ComputerService {
-
-
-
+public class TechnicalServiceImpl implements TechnicalService {
 
     @Autowired
     private TechnicalRepository technicalRepository;
-
-
 
     public List<Technical> findAll() {
         return technicalRepository.findAll();
@@ -29,7 +22,8 @@ public class TechnicalServiceImpl implements ComputerService {
         return technicalRepository.findById(id).orElseThrow(TechnicalNotFoundException::new);
     }
 
-    public Technical addTechnical(Technical technical) throws TechnicalNotFoundException {
+    @Override
+    public Technical addTechnical(Technical technical) {
         return technicalRepository.save(technical);
     }
 
@@ -40,23 +34,13 @@ public class TechnicalServiceImpl implements ComputerService {
         return technical;
     }
 
+    @Override
     public Technical modifyTechnical(long id, Technical technical) throws TechnicalNotFoundException {
         technicalRepository.findById(id).orElseThrow(TechnicalNotFoundException::new);
-        newTechnical.setId(id);
-        technicalRepository.save(newTechnical);
-        return newTechnical;
+
+        technical.setTechnical_id(id);
+        technicalRepository.save(technical);
+
+        return technical;
     }
-
-    public Technical modifyName(long id, String name) throws TechnicalNotFoundException {
-        Technical technical = technicalRepository.findById(id)
-                .orElseThrow(TechnicalNotFoundException::new);
-        technical.setName(name);
-        return technicalRepository.save(technical);
-    }
-
-
-
-
-
-
 }

@@ -8,27 +8,14 @@ import java.util.List;
 
 public interface UserService {
 
-
-
-
     List<User> findAll();
-
 
     User findById(long id) throws UserNotFoundException;
 
-
-    User addUser(UserDTO userDTO) throws UserNotFoundException;
+    User addUser(User user);
 
     User deleteUser(long id) throws UserNotFoundException;
 
-    User modifyUser(long id, UserDTO userDTO) throws UserNotFoundException, ComputerNotFoundException;
-
-    User modifyName(long id, String name) throws UserNotFoundException;
-
-
-
-
-
-
+    User modifyUser(long id, User user) throws UserNotFoundException;
 
 }

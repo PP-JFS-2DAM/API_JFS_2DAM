@@ -1,4 +1,4 @@
-package com.svalero.toplaptop.domain.DTO;
+package com.svalero.toplaptop.domain.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
