@@ -29,6 +29,7 @@ public class Order {
     @JoinColumn(name = "computer_id")
     private Computer computer;
 
+
     @ManyToOne
     @JoinColumn(name = "technical_id")
     private Technical technical;
