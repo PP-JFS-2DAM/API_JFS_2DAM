@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -29,6 +30,7 @@ public class User {
     @NotBlank
     private String dni;
     @Column
+    @Value("false")
     private boolean isVIP;
 
     @OneToMany(mappedBy = "user")
