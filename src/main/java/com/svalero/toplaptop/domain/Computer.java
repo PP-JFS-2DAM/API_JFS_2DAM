@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -26,8 +27,10 @@ public class Computer {
     @NotBlank
     private String model;
     @Column
+    @Value("0")
     private int ram;
     @Column
+    @Value("false")
     private boolean isRepaired;
 
     @ManyToOne

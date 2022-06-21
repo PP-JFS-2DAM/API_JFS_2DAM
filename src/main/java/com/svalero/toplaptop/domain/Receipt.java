@@ -3,6 +3,7 @@ package com.svalero.toplaptop.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -19,8 +20,10 @@ public class Receipt {
     private long receipt_id;
 
     @Column
+    @Value("0")
     private double price;
     @Column
+    @Value("0")
     private double discount;
     @Column
     private LocalDate date;
