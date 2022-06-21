@@ -19,8 +19,7 @@ public class Computer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long computer_id;
-
+    private long id;
     @Column
     @NotBlank
     private String brand;
@@ -28,16 +27,15 @@ public class Computer {
     @NotBlank
     private String model;
     @Column
-    @Value("0")
-    private int ram;
+    @NotBlank
+    private String ram;
     @Column
-    @Value("false")
-    private boolean isRepaired;
-
+    @Lob
+    @Value("null")
+    private byte[] computerImage;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
     @OneToMany(mappedBy = "computer")
     @JsonBackReference(value = "computer-order")
     private List<Order> orders;

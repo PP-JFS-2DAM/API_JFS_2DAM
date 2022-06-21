@@ -9,9 +9,9 @@ import java.time.LocalDate;
 @NoArgsConstructor
 
 public class OrderDTO {
-    private long computer;
-    private long technical;
-    private String description;
     private LocalDate date;
+    private String description;
+    private long technical;
+    private long computer;
 
 }
