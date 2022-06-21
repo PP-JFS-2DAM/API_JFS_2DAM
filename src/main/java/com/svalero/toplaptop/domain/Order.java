@@ -30,5 +30,4 @@ public class Order {
     @JoinColumn(name = "computer_id")
     private Computer computer;
 
-
 }

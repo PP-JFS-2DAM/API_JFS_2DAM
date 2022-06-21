@@ -10,11 +10,13 @@ public interface UserService {
 
     List<User> findAll();
 
+    List<User> findAll(String name, String surname, String dni);
+
     User findById(long id) throws UserNotFoundException;
 
     User addUser(User user);
 
-    User deleteUser(long id) throws UserNotFoundException;
+    void deleteUser(long id) throws UserNotFoundException;
 
     User modifyUser(long id, User user) throws UserNotFoundException;
 
