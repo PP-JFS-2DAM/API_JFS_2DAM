@@ -18,6 +18,8 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long order_id;
+    @Column
+    private String description;
 
     @Column(name = "order_date")
     @NotNull
