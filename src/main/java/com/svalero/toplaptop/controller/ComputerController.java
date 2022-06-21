@@ -32,9 +32,9 @@ public class ComputerController {
     @GetMapping("/computers")
     public ResponseEntity<List<Computer>> findAll() {
         logger.info("Inicio findAll computers");
-        List<Computer> centers = computerService.findAll();
+        List<Computer> computers = computerService.findAll();
         logger.info("Final findAll computers");
-        return new ResponseEntity<>(centers, HttpStatus.OK);
+        return new ResponseEntity<>(computers, HttpStatus.OK);
     }
 
     @GetMapping("/computer/{id}")

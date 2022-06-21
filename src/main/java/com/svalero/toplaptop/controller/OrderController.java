@@ -70,6 +70,7 @@ public class OrderController {
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
+
     @ExceptionHandler(OrderNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleOrderNotFoundException(OrderNotFoundException onfe) {
         ErrorResponse errorResponse = new ErrorResponse("404", onfe.getMessage());
@@ -78,11 +79,18 @@ public class OrderController {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleUserNotFoundException(UserNotFoundException onfe) {
-        ErrorResponse errorResponse = new ErrorResponse("404", onfe.getMessage());
-        logger.error(onfe.getMessage(), onfe);
-        logger.error(Arrays.toString(onfe.getStackTrace()));
+    @ExceptionHandler(ComputerNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleUserNotFoundException(ComputerNotFoundException cnfe) {
+        ErrorResponse errorResponse = new ErrorResponse("404", cnfe.getMessage());
+        logger.error(cnfe.getMessage(), cnfe);
+        logger.error(Arrays.toString(cnfe.getStackTrace()));
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(TechnicalNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleUserNotFoundException(TechnicalNotFoundException tnfe) {
+        ErrorResponse errorResponse = new ErrorResponse("404", tnfe.getMessage());
+        logger.error(tnfe.getMessage(), tnfe);
+        logger.error(Arrays.toString(tnfe.getStackTrace()));
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
