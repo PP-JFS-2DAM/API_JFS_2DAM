@@ -1,6 +1,7 @@
 package com.svalero.toplaptop.service;
 
 import com.svalero.toplaptop.domain.Computer;
+import com.svalero.toplaptop.domain.Order;
 import com.svalero.toplaptop.domain.User;
 import com.svalero.toplaptop.domain.dto.ComputerDTO;
 import com.svalero.toplaptop.exception.ComputerNotFoundException;
@@ -53,11 +54,11 @@ public class ComputerServiceImpl implements ComputerService {
     @Override
     public Mono<Computer> modifyComputer(long id, ComputerDTO computerDTO) throws ComputerNotFoundException, UserNotFoundException {
         Mono<Computer> computer = computerRepository.findById(id).onErrorReturn(new Computer());
-
+        Mono<User> user = userRepository.findById(computerDTO.getUser()).onErrorReturn(new User());
 
 
         computer.block().setId(id);
-      //  computer.block().setUser(userRepository.findById(computerDTO.getUser()));
+        computer.block().setUser(user.block());
 
         computerRepository.save(computer.block());
         return computer;

@@ -23,11 +23,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id).onErrorReturn(new User());
     }
 
-    public User addUser(User user) {
+    public Mono<User> addUser(User user) {
         ModelMapper mapper = new ModelMapper();
         User usermap = mapper.map(user, User.class);
-        userRepository.save(user);
-        return usermap;
+
+        return userRepository.save(user);
     }
 
     public Mono<User> deleteUser(long id) throws UserNotFoundException {

@@ -5,6 +5,8 @@ import com.svalero.toplaptop.exception.TechnicalNotFoundException;
 import com.svalero.toplaptop.repository.TechnicalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -14,33 +16,33 @@ public class TechnicalServiceImpl implements TechnicalService {
     @Autowired
     private TechnicalRepository technicalRepository;
 
-    public List<Technical> findAll() {
+    public Flux<Technical> findAll() {
         return technicalRepository.findAll();
     }
 
-    public Technical findById(long id) throws TechnicalNotFoundException {
-        return technicalRepository.findById(id).orElseThrow(TechnicalNotFoundException::new);
+    public Mono<Technical> findById(long id) throws TechnicalNotFoundException {
+        return technicalRepository.findById(id).onErrorReturn(new Technical());
     }
 
     @Override
-    public Technical addTechnical(Technical technical) {
+    public Mono<Technical> addTechnical(Technical technical) {
         return technicalRepository.save(technical);
     }
 
-    public Technical deleteTechnical(long id) throws TechnicalNotFoundException {
-        Technical technical = technicalRepository.findById(id).orElseThrow(TechnicalNotFoundException::new);
+    public Mono<Technical> deleteTechnical(long id) throws TechnicalNotFoundException {
+        Mono<Technical> technical = technicalRepository.findById(id).onErrorReturn(new Technical());
 
-        technicalRepository.delete(technical);
+        technicalRepository.delete(technical.block());
         return technical;
     }
 
     @Override
-    public Technical modifyTechnical(long id, Technical technical) throws TechnicalNotFoundException {
-        technicalRepository.findById(id).orElseThrow(TechnicalNotFoundException::new);
+    public Mono<Technical> modifyTechnical(long id, Technical technical) throws TechnicalNotFoundException {
+        technicalRepository.findById(id).onErrorReturn(new Technical());
 
         technical.setId(id);
-        technicalRepository.save(technical);
 
-        return technical;
+
+        return technicalRepository.save(technical);
     }
 }

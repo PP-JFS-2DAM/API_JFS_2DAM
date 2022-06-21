@@ -1,5 +1,7 @@
 package com.svalero.toplaptop.service;
 
+import com.svalero.toplaptop.domain.Computer;
+import com.svalero.toplaptop.domain.Order;
 import com.svalero.toplaptop.domain.Receipt;
 import com.svalero.toplaptop.domain.dto.ReceiptDTO;
 import com.svalero.toplaptop.exception.OrderNotFoundException;
@@ -9,6 +11,8 @@ import com.svalero.toplaptop.repository.ReceiptRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -20,46 +24,45 @@ public class ReceiptServiceImpl implements ReceiptService {
     @Autowired
     private OrderRepository orderRepository;
 
-    public List<Receipt> findAll() {
+    public Flux<Receipt> findAll() {
         return receiptRepository.findAll();
     }
 
-    public Receipt findById(long id) throws ReceiptNotFoundException {
-        return receiptRepository.findById(id).orElseThrow(ReceiptNotFoundException::new);
+    public Mono<Receipt> findById(long id) throws ReceiptNotFoundException {
+        return receiptRepository.findById(id).onErrorReturn(new Receipt());
     }
 
     @Override
-    public Receipt addReceipt(ReceiptDTO receiptDTO) throws OrderNotFoundException {
+    public Mono<Receipt> addReceipt(ReceiptDTO receiptDTO) throws OrderNotFoundException {
+        Mono<Order> order = orderRepository.findById(receiptDTO.getOrder()).onErrorReturn(new Order());
         ModelMapper mapper = new ModelMapper();
         Receipt receipt = mapper.map(receiptDTO, Receipt.class);
 
-        receipt.setOrder(orderRepository.findById(receiptDTO.getOrder())
-                .orElseThrow(OrderNotFoundException::new));
+        receipt.setOrder(order.block());
 
-        receiptRepository.save(receipt);
-        return receipt;
+
+
+        return receiptRepository.save(receipt);
     }
 
-    public Receipt deleteReceipt(long id) throws ReceiptNotFoundException {
-        Receipt receipt = receiptRepository.findById(id)
-                .orElseThrow(ReceiptNotFoundException::new);
+    public Mono<Receipt> deleteReceipt(long id) throws ReceiptNotFoundException {
+        Mono<Receipt> receipt = receiptRepository.findById(id).onErrorReturn(new Receipt());
 
-        receiptRepository.delete(receipt);
+
+        receiptRepository.delete(receipt.block());
         return receipt;
     }
 
     @Override
-    public Receipt modifyReceipt(long id, ReceiptDTO receiptDTO) throws ReceiptNotFoundException, OrderNotFoundException {
-        receiptRepository.findById(id).orElseThrow(ReceiptNotFoundException::new);
+    public Mono<Receipt> modifyReceipt(long id, ReceiptDTO receiptDTO) throws ReceiptNotFoundException, OrderNotFoundException {
+        Mono<Receipt> receipt = receiptRepository.findById(id).onErrorReturn(new Receipt());
+        Mono<Order> order = orderRepository.findById(receiptDTO.getOrder()).onErrorReturn(new Order());
 
-        ModelMapper mapper = new ModelMapper();
-        Receipt receipt = mapper.map(receiptDTO, Receipt.class);
 
-        receipt.setId(id);
-        receipt.setOrder(orderRepository.findById(receiptDTO.getOrder())
-                .orElseThrow(OrderNotFoundException::new));
+        receipt.block().setId(id);
+        receipt.block().setOrder(order.block());
 
-        receiptRepository.save(receipt);
-        return receipt;
+
+        return receiptRepository.save(receipt.block());
     }
 }

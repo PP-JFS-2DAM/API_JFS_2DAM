@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
 import java.util.Arrays;
@@ -29,44 +31,44 @@ public class TechnicalController {
     private final Logger logger = LoggerFactory.getLogger(TechnicalController.class);
 
     @GetMapping("/technicals")
-    public ResponseEntity<List<Technical>> findAll() {
+    public ResponseEntity<Flux<Technical>> findAll() {
         logger.info("Inicio findAll technicals");
-        List<Technical> technicals = technicalService.findAll();
+        Flux<Technical> technicals = technicalService.findAll();
         logger.info("Final findAll technicals");
-        return new ResponseEntity<>(technicals, HttpStatus.OK);
+        return ResponseEntity.ok(technicals);
     }
 
     @GetMapping("/technical/{id}")
-    public ResponseEntity<Technical> findById(@PathVariable long id) throws TechnicalNotFoundException {
+    public ResponseEntity<Mono<Technical>> findById(@PathVariable long id) throws TechnicalNotFoundException {
         logger.info("Inicio findById technicals");
-        Technical technical = technicalService.findById(id);
+        Mono<Technical> technical = technicalService.findById(id);
         logger.info("Final findById technicals");
-        return new ResponseEntity<>(technical, HttpStatus.OK);
+        return ResponseEntity.ok(technical);
     }
 
     @PostMapping("/technical")
-    public ResponseEntity<Technical> addTechnical(@Valid @RequestBody Technical technical)   {
+    public ResponseEntity<?> addTechnical(@Valid @RequestBody Technical technical)   {
         logger.info("Inicio addTechnical");
-        Technical newTechnical = technicalService.addTechnical(technical);
+        Mono<Technical> newTechnical = technicalService.addTechnical(technical);
         logger.info("Final addTechnical");
-        return new ResponseEntity<>(newTechnical, HttpStatus.CREATED);
+        return ResponseEntity.ok(newTechnical.block());
     }
 
     @DeleteMapping("/technical/{id}")
-    public ResponseEntity<Void> deleteTechnical(@PathVariable long id) throws TechnicalNotFoundException {
+    public ResponseEntity<Mono<Technical>> deleteTechnical(@PathVariable long id) throws TechnicalNotFoundException {
         logger.info("Inicio deleteTechnical");
-        technicalService.deleteTechnical(id);
+        Mono<Technical> technical = technicalService.deleteTechnical(id);
         logger.info("Final deleteTechnical");
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.ok(technical);
     }
 
     @PutMapping("/technical/{id}")
-    public ResponseEntity<Technical> modifyTechnical(@PathVariable long id, @Valid @RequestBody Technical technical)
+    public ResponseEntity<Mono<Technical>> modifyTechnical(@PathVariable long id, @Valid @RequestBody Technical technical)
             throws TechnicalNotFoundException {
         logger.info("Inicio modifyTechnical");
-        Technical newTechnical = technicalService.modifyTechnical(id, technical);
+        Mono<Technical> newTechnical = technicalService.modifyTechnical(id, technical);
         logger.info("Final modifyTechnical");
-        return new ResponseEntity<>(newTechnical, HttpStatus.OK);
+        return ResponseEntity.ok(newTechnical);
     }
 
     @ExceptionHandler(TechnicalNotFoundException.class)

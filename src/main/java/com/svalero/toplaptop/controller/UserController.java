@@ -34,7 +34,7 @@ public class UserController {
         logger.info("Inicio findAll users");
         Flux<User> users = userService.findAll();
         logger.info("Final findAll users");
-        return new ResponseEntity<>(users, HttpStatus.OK);
+        return ResponseEntity.ok(users);
     }
 
     @GetMapping("/user/{id}")
@@ -42,15 +42,15 @@ public class UserController {
         logger.info("Inicio findById users");
         Mono<User> user = userService.findById(id);
         logger.info("Final findById users");
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return ResponseEntity.ok(user);
     }
 
     @PostMapping("/user")
     public ResponseEntity<?> addUser(@Valid @RequestBody User user)   {
         logger.info("Inicio addUser");
-        User newUser = userService.addUser(user);
+        Mono<User> newUser = userService.addUser(user);
         logger.info("Final addUser");
-        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+        return ResponseEntity.ok(newUser.block());
     }
 
     @DeleteMapping("/user/{id}")
@@ -58,7 +58,7 @@ public class UserController {
         logger.info("Inicio deleteUser");
         Mono<User> user = userService.deleteUser(id);
         logger.info("Final deleteUser");
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.ok(user);
     }
 
     @PutMapping("/user/{id}")
@@ -67,7 +67,7 @@ public class UserController {
         logger.info("Inicio modifyUser");
         Mono<User> newUser = userService.modifyUser(id, user);
         logger.info("Final modifyUser");
-        return new ResponseEntity<>(newUser, HttpStatus.OK);
+        return ResponseEntity.ok(newUser);
     }
 
     @ExceptionHandler(UserNotFoundException.class)

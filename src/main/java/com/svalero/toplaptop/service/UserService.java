@@ -11,7 +11,7 @@ public interface UserService {
 
     Mono<User> findById(long id) throws UserNotFoundException;
 
-    User addUser(User user);
+    Mono<User> addUser(User user);
 
     Mono<User> deleteUser(long id) throws UserNotFoundException;
 

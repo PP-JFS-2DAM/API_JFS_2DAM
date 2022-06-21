@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
 import java.util.Arrays;
@@ -30,44 +32,45 @@ public class OrderController {
     private final Logger logger = LoggerFactory.getLogger(OrderController.class);
 
     @GetMapping("/orders")
-    public ResponseEntity<List<Order>> findAll() {
+    public ResponseEntity<Flux<Order>> findAll() {
         logger.info("Inicio findAll orders");
-        List<Order> orders = orderService.findAll();
+        Flux<Order> orders = orderService.findAll();
         logger.info("Final findAll orders");
-        return new ResponseEntity<>(orders, HttpStatus.OK);
+        return ResponseEntity.ok(orders);
     }
 
     @GetMapping("/order/{id}")
-    public ResponseEntity<Order> findById(@PathVariable long id) throws OrderNotFoundException {
+    public ResponseEntity<Mono<Order>> findById(@PathVariable long id) throws OrderNotFoundException {
         logger.info("Inicio findById orders");
-        Order order = orderService.findById(id);
+        Mono<Order> order = orderService.findById(id);
         logger.info("Final findById orders");
-        return new ResponseEntity<>(order, HttpStatus.OK);
+        return ResponseEntity.ok(order);
     }
 
     @PostMapping("/order")
-    public ResponseEntity<Order> addOrder(@Valid @RequestBody OrderDTO orderDTO) throws ComputerNotFoundException, TechnicalNotFoundException {
+    public ResponseEntity<?> addOrder(@Valid @RequestBody OrderDTO orderDTO) throws ComputerNotFoundException, TechnicalNotFoundException {
         logger.info("Inicio addOrder");
-        Order order = orderService.addOrder(orderDTO);
+        Mono<Order> order = orderService.addOrder(orderDTO);
         logger.info("Final addOrder");
-        return new ResponseEntity<>(order, HttpStatus.CREATED);
+        return ResponseEntity.ok(order.block());
     }
 
     @DeleteMapping("/order/{id}")
-    public ResponseEntity<Void> deleteOrder(@PathVariable long id) throws OrderNotFoundException {
+    public ResponseEntity<Mono<Order>> deleteOrder(@PathVariable long id) throws OrderNotFoundException {
         logger.info("Inicio deleteOrder");
-        orderService.deleteOrder(id);
+
+        Mono<Order> order = orderService.deleteOrder(id);
         logger.info("Final deleteOrder");
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.ok(order);
     }
 
     @PutMapping("/order/{id}")
-    public ResponseEntity<Order> modifyOrder(@PathVariable long id, @Valid @RequestBody OrderDTO orderDTO)
+    public ResponseEntity<Mono<Order>> modifyOrder(@PathVariable long id, @Valid @RequestBody OrderDTO orderDTO)
             throws OrderNotFoundException, ComputerNotFoundException, TechnicalNotFoundException {
         logger.info("Inicio modifyOrder");
-        Order order = orderService.modifyOrder(id, orderDTO);
+        Mono<Order> order = orderService.modifyOrder(id, orderDTO);
         logger.info("Final modifyOrder");
-        return new ResponseEntity<>(order, HttpStatus.OK);
+        return ResponseEntity.ok(order);
     }
 
 

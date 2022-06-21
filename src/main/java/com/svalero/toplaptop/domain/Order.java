@@ -3,6 +3,8 @@ package com.svalero.toplaptop.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -12,16 +14,16 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "order")
+@Document(value = "order")
 public class Order  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "order_date")
+    @Field(name = "order_date")
     @NotNull
     private LocalDate orderDate;
-    @Column
+    @Field
     private String description;
     @ManyToOne
     @JoinColumn(name = "technical_id")

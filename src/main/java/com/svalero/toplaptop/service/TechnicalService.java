@@ -3,19 +3,21 @@ package com.svalero.toplaptop.service;
 import com.svalero.toplaptop.domain.Technical;
 import com.svalero.toplaptop.exception.OrderNotFoundException;
 import com.svalero.toplaptop.exception.TechnicalNotFoundException;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
 public interface TechnicalService {
 
-    List<Technical> findAll();
+    Flux<Technical> findAll();
 
-    Technical findById(long id) throws TechnicalNotFoundException;
+    Mono<Technical> findById(long id) throws TechnicalNotFoundException;
 
-    Technical addTechnical(Technical technical);
+    Mono<Technical> addTechnical(Technical technical);
 
-    Technical deleteTechnical(long id) throws TechnicalNotFoundException;
+    Mono<Technical> deleteTechnical(long id) throws TechnicalNotFoundException;
 
-    Technical modifyTechnical(long id, Technical technical) throws TechnicalNotFoundException;
+    Mono<Technical> modifyTechnical(long id, Technical technical) throws TechnicalNotFoundException;
 
 }

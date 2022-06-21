@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
 import java.util.Arrays;
@@ -31,27 +33,27 @@ public class ReceiptController {
     private final Logger logger = LoggerFactory.getLogger(ReceiptController.class);
 
     @GetMapping("/receipts")
-    public ResponseEntity<List<Receipt>> findAll() {
+    public ResponseEntity<Flux<Receipt>> findAll() {
         logger.info("Inicio findAll receipts");
-        List<Receipt> receipts = receiptService.findAll();
+        Flux<Receipt> receipts = receiptService.findAll();
         logger.info("Final findAll receipts");
-        return new ResponseEntity<>(receipts, HttpStatus.OK);
+        return ResponseEntity.ok(receipts);
     }
 
     @GetMapping("/receipt/{id}")
-    public ResponseEntity<Receipt> findById(@PathVariable long id) throws ReceiptNotFoundException {
+    public ResponseEntity<Mono<Receipt>> findById(@PathVariable long id) throws ReceiptNotFoundException {
         logger.info("Inicio findById receipts");
-        Receipt receipt = receiptService.findById(id);
+        Mono<Receipt> receipt = receiptService.findById(id);
         logger.info("Final findById receipts");
-        return new ResponseEntity<>(receipt, HttpStatus.OK);
+        return ResponseEntity.ok(receipt);
     }
 
     @PostMapping("/receipt")
-    public ResponseEntity<Receipt> addReceipt(@Valid @RequestBody ReceiptDTO receiptDTO) throws OrderNotFoundException {
+    public ResponseEntity<?> addReceipt(@Valid @RequestBody ReceiptDTO receiptDTO) throws OrderNotFoundException {
         logger.info("Inicio addReceipt");
-        Receipt receipt = receiptService.addReceipt(receiptDTO);
+        Mono<Receipt> receipt = receiptService.addReceipt(receiptDTO);
         logger.info("Final addReceipt");
-        return new ResponseEntity<>(receipt, HttpStatus.CREATED);
+        return ResponseEntity.ok(receipt.block());
     }
 
     @DeleteMapping("/receipt/{id}")
@@ -63,12 +65,12 @@ public class ReceiptController {
     }
 
     @PutMapping("/receipt/{id}")
-    public ResponseEntity<Receipt> modifyReceipt(@PathVariable long id, @Valid @RequestBody ReceiptDTO receiptDTO)
+    public ResponseEntity<Mono<Receipt>> modifyReceipt(@PathVariable long id, @Valid @RequestBody ReceiptDTO receiptDTO)
             throws ReceiptNotFoundException, OrderNotFoundException {
         logger.info("Inicio modifyReceipt");
-        Receipt receipt = receiptService.modifyReceipt(id, receiptDTO);
+        Mono<Receipt> receipt = receiptService.modifyReceipt(id, receiptDTO);
         logger.info("Final modifyReceipt");
-        return new ResponseEntity<>(receipt, HttpStatus.OK);
+        return ResponseEntity.ok(receipt);
     }
 
     @ExceptionHandler(ReceiptNotFoundException.class)
