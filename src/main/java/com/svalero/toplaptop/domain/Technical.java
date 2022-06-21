@@ -17,7 +17,7 @@ import java.util.List;
 public class Technical {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long technical_id;
+    private long id;
     @Column
     @NotBlank
     private String name;

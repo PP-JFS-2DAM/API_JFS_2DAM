@@ -55,7 +55,7 @@ public class ComputerServiceImpl implements ComputerService {
         ModelMapper mapper = new ModelMapper();
         Computer computer = mapper.map(computerDTO, Computer.class);
 
-        computer.setComputer_id(id);
+        computer.setId(id);
         computer.setUser(userRepository.findById(computerDTO.getUser())
                 .orElseThrow(UserNotFoundException::new));
 
