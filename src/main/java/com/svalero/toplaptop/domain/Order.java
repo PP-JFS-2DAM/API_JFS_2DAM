@@ -17,22 +17,18 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long order_id;
-    @Column
-    private String description;
-
+    private long id;
     @Column(name = "order_date")
     @NotNull
     private LocalDate orderDate;
-
-    @ManyToOne
-    @JoinColumn(name = "computer_id")
-    private Computer computer;
-
-
+    @Column
+    private String description;
     @ManyToOne
     @JoinColumn(name = "technical_id")
     private Technical technical;
+    @ManyToOne
+    @JoinColumn(name = "computer_id")
+    private Computer computer;
 
 
 }

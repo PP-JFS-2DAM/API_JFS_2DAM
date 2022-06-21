@@ -38,7 +38,7 @@ public class TechnicalServiceImpl implements TechnicalService {
     public Technical modifyTechnical(long id, Technical technical) throws TechnicalNotFoundException {
         technicalRepository.findById(id).orElseThrow(TechnicalNotFoundException::new);
 
-        technical.setTechnical_id(id);
+        technical.setId(id);
         technicalRepository.save(technical);
 
         return technical;

@@ -17,7 +17,7 @@ public class Receipt {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long receipt_id;
+    private long id;
 
     @Column
     @Value("0")

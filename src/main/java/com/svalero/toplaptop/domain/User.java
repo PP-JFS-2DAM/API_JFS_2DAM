@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
@@ -19,7 +20,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long user_id;
+    private long id;
     @Column
     @NotBlank
     private String name;
@@ -29,9 +30,21 @@ public class User {
     @Column
     @NotBlank
     private String dni;
-    @Column
+    @Column(name = "vip_user")
     @Value("false")
-    private boolean isVIP;
+    private boolean vip;
+    @Column
+    @NotNull
+    @Value("0")
+    private float latitude;
+    @Column
+    @NotNull
+    @Value("0")
+    private float longitud;
+    @Column
+    @Lob
+    @Value("null")
+    private byte[] userImage;
 
     @OneToMany(mappedBy = "user")
     @JsonBackReference(value = "user-computer")

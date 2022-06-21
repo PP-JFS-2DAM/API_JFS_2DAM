@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
     public User modifyUser(long id, User newUser) throws UserNotFoundException {
         userRepository.findById(id).orElseThrow(UserNotFoundException::new);
 
-        newUser.setUser_id(id);
+        newUser.setId(id);
         userRepository.save(newUser);
 
         return newUser;
