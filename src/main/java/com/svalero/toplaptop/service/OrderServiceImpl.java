@@ -62,7 +62,7 @@ public class OrderServiceImpl implements OrderService {
         ModelMapper mapper = new ModelMapper();
         Order order = mapper.map(orderDTO, Order.class);
 
-        order.setOrder_id(id);
+        order.setId(id);
         order.setComputer(computerRepository.findById(orderDTO.getComputer())
                 .orElseThrow(ComputerNotFoundException::new));
 
