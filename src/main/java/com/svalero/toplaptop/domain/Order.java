@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "order")
-public class Order {
+public class Order  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +27,7 @@ public class Order {
     @JoinColumn(name = "technical_id")
     private Technical technical;
     @ManyToOne
-    @JoinColumn(name = "computer_id")
+    @JoinColumn(name = "computer")
     private Computer computer;
 
 

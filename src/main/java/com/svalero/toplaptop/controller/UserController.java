@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
 import java.util.Arrays;
@@ -28,23 +30,23 @@ public class UserController {
     private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/users")
-    public ResponseEntity<List<User>> findAll() {
+    public ResponseEntity<Flux<User>> findAll() {
         logger.info("Inicio findAll users");
-        List<User> users = userService.findAll();
+        Flux<User> users = userService.findAll();
         logger.info("Final findAll users");
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @GetMapping("/user/{id}")
-    public ResponseEntity<User> findById(@PathVariable long id) throws UserNotFoundException {
+    public ResponseEntity<Mono<User>> findById(@PathVariable long id) throws UserNotFoundException {
         logger.info("Inicio findById users");
-        User user = userService.findById(id);
+        Mono<User> user = userService.findById(id);
         logger.info("Final findById users");
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping("/user")
-    public ResponseEntity<User> addUser(@Valid @RequestBody User user)   {
+    public ResponseEntity<?> addUser(@Valid @RequestBody User user)   {
         logger.info("Inicio addUser");
         User newUser = userService.addUser(user);
         logger.info("Final addUser");
@@ -52,18 +54,18 @@ public class UserController {
     }
 
     @DeleteMapping("/user/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable long id) throws UserNotFoundException {
+    public ResponseEntity<Mono<User>> deleteUser(@PathVariable long id) throws UserNotFoundException {
         logger.info("Inicio deleteUser");
-        userService.deleteUser(id);
+        Mono<User> user = userService.deleteUser(id);
         logger.info("Final deleteUser");
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("/user/{id}")
-    public ResponseEntity<User> modifyUser(@PathVariable long id, @Valid @RequestBody User user)
+    public ResponseEntity<Mono<User>> modifyUser(@PathVariable long id, @Valid @RequestBody User user)
             throws UserNotFoundException {
         logger.info("Inicio modifyUser");
-        User newUser = userService.modifyUser(id, user);
+        Mono<User> newUser = userService.modifyUser(id, user);
         logger.info("Final modifyUser");
         return new ResponseEntity<>(newUser, HttpStatus.OK);
     }

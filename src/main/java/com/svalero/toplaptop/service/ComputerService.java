@@ -4,19 +4,19 @@ import com.svalero.toplaptop.domain.Computer;
 import com.svalero.toplaptop.domain.dto.ComputerDTO;
 import com.svalero.toplaptop.exception.ComputerNotFoundException;
 import com.svalero.toplaptop.exception.UserNotFoundException;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public interface ComputerService {
 
-    List<Computer> findAll();
+    Flux<Computer> findAll();
 
-    Computer findById(long id) throws ComputerNotFoundException;
+    Mono<Computer> findById(long id) throws ComputerNotFoundException;
 
-    Computer addComputer(ComputerDTO computerDTO) throws UserNotFoundException;
+    Mono<Computer> addComputer(ComputerDTO computerDTO) throws UserNotFoundException;
 
-    Computer deleteComputer(long id) throws ComputerNotFoundException;
+    Mono<Computer> deleteComputer(long id) throws ComputerNotFoundException;
 
-    Computer modifyComputer(long id, ComputerDTO computerDTO) throws ComputerNotFoundException, UserNotFoundException;
+    Mono<Computer> modifyComputer(long id, ComputerDTO computerDTO) throws ComputerNotFoundException, UserNotFoundException;
 
 }

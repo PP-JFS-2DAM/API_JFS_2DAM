@@ -1,5 +1,6 @@
 package com.svalero.toplaptop.service;
 
+import com.svalero.toplaptop.domain.Computer;
 import com.svalero.toplaptop.domain.Order;
 import com.svalero.toplaptop.domain.dto.OrderDTO;
 import com.svalero.toplaptop.exception.ComputerNotFoundException;
@@ -11,6 +12,7 @@ import com.svalero.toplaptop.repository.TechnicalRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -35,11 +37,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order addOrder(OrderDTO orderDTO) throws ComputerNotFoundException, TechnicalNotFoundException {
+        Mono<Computer> computer = computerRepository.findById(orderDTO.getComputer()).onErrorReturn(new Computer());
         ModelMapper mapper = new ModelMapper();
         Order order = mapper.map(orderDTO, Order.class);
 
-        order.setComputer(computerRepository.findById(orderDTO.getComputer())
-                .orElseThrow(ComputerNotFoundException::new));
+        order.setComputer(computer.block());
 
         order.setTechnical(technicalRepository.findById(orderDTO.getTechnical())
                 .orElseThrow(TechnicalNotFoundException::new));
@@ -59,13 +61,12 @@ public class OrderServiceImpl implements OrderService {
     public Order modifyOrder(long id, OrderDTO orderDTO) throws OrderNotFoundException, ComputerNotFoundException, TechnicalNotFoundException {
         orderRepository.findById(id).orElseThrow(OrderNotFoundException::new);
 
+        Mono<Computer> computer = computerRepository.findById(orderDTO.getComputer()).onErrorReturn(new Computer());
         ModelMapper mapper = new ModelMapper();
         Order order = mapper.map(orderDTO, Order.class);
 
         order.setId(id);
-        order.setComputer(computerRepository.findById(orderDTO.getComputer())
-                .orElseThrow(ComputerNotFoundException::new));
-
+        order.setComputer(computer.block());
         order.setTechnical(technicalRepository.findById(orderDTO.getTechnical())
                 .orElseThrow(TechnicalNotFoundException::new));
 

@@ -1,21 +1,20 @@
 package com.svalero.toplaptop.service;
 
 import com.svalero.toplaptop.domain.User;
-import com.svalero.toplaptop.exception.ComputerNotFoundException;
 import com.svalero.toplaptop.exception.UserNotFoundException;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public interface UserService {
 
-    List<User> findAll();
+    Flux<User> findAll();
 
-    User findById(long id) throws UserNotFoundException;
+    Mono<User> findById(long id) throws UserNotFoundException;
 
     User addUser(User user);
 
-    User deleteUser(long id) throws UserNotFoundException;
+    Mono<User> deleteUser(long id) throws UserNotFoundException;
 
-    User modifyUser(long id, User user) throws UserNotFoundException;
+    Mono<User> modifyUser(long id, User user) throws UserNotFoundException;
 
 }

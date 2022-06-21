@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -14,34 +16,34 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "user")
+@Document(value = "user")
 
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column
+    @Field
     @NotBlank
     private String name;
-    @Column
+    @Field
     @NotBlank
     private String surname;
-    @Column
+    @Field
     @NotBlank
     private String dni;
-    @Column(name = "vip_user")
+    @Field(name = "vip_user")
     @Value("false")
     private boolean vip;
-    @Column
+    @Field
     @NotNull
     @Value("0")
     private float latitude;
-    @Column
+    @Field
     @NotNull
     @Value("0")
     private float longitud;
-    @Column
+    @Field
     @Lob
     @Value("null")
     private byte[] userImage;

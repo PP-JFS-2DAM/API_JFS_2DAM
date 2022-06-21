@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
 import java.util.Arrays;
@@ -30,25 +32,25 @@ public class ComputerController {
     private final Logger logger = LoggerFactory.getLogger(ComputerController.class);
 
     @GetMapping("/computers")
-    public ResponseEntity<List<Computer>> findAll() {
+    public ResponseEntity<Flux<Computer>> findAll() {
         logger.info("Inicio findAll computers");
-        List<Computer> computers = computerService.findAll();
+        Flux<Computer> computers = computerService.findAll();
         logger.info("Final findAll computers");
         return new ResponseEntity<>(computers, HttpStatus.OK);
     }
 
     @GetMapping("/computer/{id}")
-    public ResponseEntity<Computer> findById(@PathVariable long id) throws ComputerNotFoundException {
+    public ResponseEntity<Mono<Computer>> findById(@PathVariable long id) throws ComputerNotFoundException {
         logger.info("Inicio findById computers");
-        Computer computer = computerService.findById(id);
+        Mono<Computer> computer = computerService.findById(id);
         logger.info("Final findById computers");
         return new ResponseEntity<>(computer, HttpStatus.OK);
     }
 
     @PostMapping("/computer")
-    public ResponseEntity<Computer> addComputer(@Valid @RequestBody ComputerDTO computerDTO) throws UserNotFoundException {
+    public ResponseEntity<?> addComputer(@Valid @RequestBody ComputerDTO computerDTO) throws UserNotFoundException {
         logger.info("Inicio addComputer");
-        Computer computer = computerService.addComputer(computerDTO);
+        Mono<Computer> computer = computerService.addComputer(computerDTO);
         logger.info("Final addComputer");
         return new ResponseEntity<>(computer, HttpStatus.CREATED);
     }
@@ -62,10 +64,10 @@ public class ComputerController {
     }
 
     @PutMapping("/computer/{id}")
-    public ResponseEntity<Computer> modifyComputer(@PathVariable long id, @Valid @RequestBody ComputerDTO computerDTO)
+    public ResponseEntity<Mono<Computer>> modifyComputer(@PathVariable long id, @Valid @RequestBody ComputerDTO computerDTO)
             throws ComputerNotFoundException, UserNotFoundException {
         logger.info("Inicio modifyComputer");
-        Computer computer = computerService.modifyComputer(id, computerDTO);
+        Mono<Computer> computer = computerService.modifyComputer(id, computerDTO);
         logger.info("Final modifyComputer");
         return new ResponseEntity<>(computer, HttpStatus.OK);
     }

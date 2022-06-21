@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 
 import javax.persistence.*;
@@ -14,22 +16,22 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "computer")
-public class Computer {
+@Document(value = "computer")
+public class Computer extends User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column
+    @Field
     @NotBlank
     private String brand;
-    @Column
+    @Field
     @NotBlank
     private String model;
-    @Column
+    @Field
     @NotBlank
     private String ram;
-    @Column
+    @Field
     @Lob
     @Value("null")
     private byte[] computerImage;
@@ -39,5 +41,7 @@ public class Computer {
     @OneToMany(mappedBy = "computer")
     @JsonBackReference(value = "computer-order")
     private List<Order> orders;
+
+
 
 }

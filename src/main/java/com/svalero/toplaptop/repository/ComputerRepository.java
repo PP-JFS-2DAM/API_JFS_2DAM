@@ -1,14 +1,18 @@
 package com.svalero.toplaptop.repository;
 
 import com.svalero.toplaptop.domain.Computer;
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
 
 @Repository
-public interface ComputerRepository extends CrudRepository<Computer, Long> {
+public interface ComputerRepository extends ReactiveMongoRepository<Computer, Long> {
 
-    List<Computer> findAll();
+    Flux<Computer> findAll();
 
 }
+
+
