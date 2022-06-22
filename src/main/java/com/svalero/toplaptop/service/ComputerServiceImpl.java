@@ -26,6 +26,12 @@ public class ComputerServiceImpl implements ComputerService {
         return computerRepository.findAll();
     }
 
+    @Override
+    public Flux<Computer> findAll(String brand) {
+        return computerRepository.findByBrand(brand);
+    }
+
+
     public Mono<Computer> findById(long id) throws ComputerNotFoundException {
         return computerRepository.findById(id).onErrorReturn(new Computer());
     }

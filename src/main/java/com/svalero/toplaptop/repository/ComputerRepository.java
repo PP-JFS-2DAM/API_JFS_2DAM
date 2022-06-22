@@ -12,6 +12,7 @@ import java.util.List;
 public interface ComputerRepository extends ReactiveMongoRepository<Computer, Long> {
 
     Flux<Computer> findAll();
+    Flux<Computer> findByBrand(String brand);
 
 }
 

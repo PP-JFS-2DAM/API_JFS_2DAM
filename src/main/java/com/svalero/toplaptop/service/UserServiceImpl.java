@@ -23,10 +23,8 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id).onErrorReturn(new User());
     }
 
+    @Override
     public Mono<User> addUser(User user) {
-        ModelMapper mapper = new ModelMapper();
-        User usermap = mapper.map(user, User.class);
-
         return userRepository.save(user);
     }
 

@@ -11,6 +11,8 @@ public interface ComputerService {
 
     Flux<Computer> findAll();
 
+    Flux<Computer> findAll(String brand);
+
     Mono<Computer> findById(long id) throws ComputerNotFoundException;
 
     Mono<Computer> addComputer(ComputerDTO computerDTO) throws UserNotFoundException;
