@@ -24,6 +24,11 @@ public class ComputerServiceImpl implements ComputerService {
         return computerRepository.findAll();
     }
 
+    @Override
+    public List<Computer> findAll(String brand, String model, String ram) {
+        return computerRepository.findByBrandContainingOrModelContainingOrRamContaining(brand, model, ram);
+    }
+
     public Computer findById(long id) throws ComputerNotFoundException {
         return computerRepository.findById(id).orElseThrow(ComputerNotFoundException::new);
     }
