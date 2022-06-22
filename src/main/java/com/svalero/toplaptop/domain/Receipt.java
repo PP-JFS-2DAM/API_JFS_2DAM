@@ -29,7 +29,7 @@ public class Receipt {
 
     @OneToOne
     @JoinColumn(name = "order_id")
-    private WorkOrder workorder;
+    private Order order;
 
 
 }

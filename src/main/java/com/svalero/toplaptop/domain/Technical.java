@@ -33,6 +33,6 @@ public class Technical {
 
     @OneToMany(mappedBy = "technical")
     @JsonBackReference(value = "technical-work_order")
-    private List<WorkOrder> workOrders;
+    private List<Order> orders;
 
 }

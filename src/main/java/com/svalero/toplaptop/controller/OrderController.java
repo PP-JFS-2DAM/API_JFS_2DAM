@@ -1,6 +1,7 @@
 package com.svalero.toplaptop.controller;
 
-import com.svalero.toplaptop.domain.WorkOrder;
+import com.svalero.toplaptop.domain.Order;
+import com.svalero.toplaptop.domain.dto.OrderDTO;
 import com.svalero.toplaptop.exception.*;
 import com.svalero.toplaptop.service.OrderService;
 import org.slf4j.Logger;
@@ -27,27 +28,27 @@ public class OrderController {
     private final Logger logger = LoggerFactory.getLogger(OrderController.class);
 
     @GetMapping("/orders")
-    public ResponseEntity<List<WorkOrder>> findAll() {
+    public ResponseEntity<List<Order>> findAll() {
         logger.info("Inicio findAll work_orders");
-        List<WorkOrder> workOrders = orderService.findAll();
-        logger.info("Final findAll workOrders");
-        return new ResponseEntity<>(workOrders, HttpStatus.OK);
+        List<Order> orders = orderService.findAll();
+        logger.info("Final findAll orders");
+        return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
     @GetMapping("/order/{id}")
-    public ResponseEntity<WorkOrder> findById(@PathVariable long id) throws OrderNotFoundException {
-        logger.info("Inicio findById workOrders");
-        WorkOrder workOrder = orderService.findById(id);
-        logger.info("Final findById workOrders");
-        return new ResponseEntity<>(workOrder, HttpStatus.OK);
+    public ResponseEntity<Order> findById(@PathVariable long id) throws OrderNotFoundException {
+        logger.info("Inicio findById orders");
+        Order order = orderService.findById(id);
+        logger.info("Final findById ordes");
+        return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
     @PostMapping("/order")
-    public ResponseEntity<WorkOrder> addOrder(@Valid @RequestBody com.svalero.toplaptop.domain.dto.WorkOrderDTO workOrderDTO) throws ComputerNotFoundException, TechnicalNotFoundException {
+    public ResponseEntity<Order> addOrder(@Valid @RequestBody OrderDTO orderDTO) throws ComputerNotFoundException, TechnicalNotFoundException {
         logger.info("Inicio addOrder");
-        WorkOrder workOrder = orderService.addOrder(workOrderDTO);
+        Order order = orderService.addOrder(orderDTO);
         logger.info("Final addOrder");
-        return new ResponseEntity<>(workOrder, HttpStatus.CREATED);
+        return new ResponseEntity<>(order, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/order/{id}")
@@ -59,12 +60,12 @@ public class OrderController {
     }
 
     @PutMapping("/order/{id}")
-    public ResponseEntity<WorkOrder> modifyOrder(@PathVariable long id, @Valid @RequestBody com.svalero.toplaptop.domain.dto.WorkOrderDTO workOrderDTO)
+    public ResponseEntity<Order> modifyOrder(@PathVariable long id, @Valid @RequestBody OrderDTO orderDTO)
             throws OrderNotFoundException, ComputerNotFoundException, TechnicalNotFoundException {
         logger.info("Inicio modifyOrder");
-        WorkOrder workOrder = orderService.modifyOrder(id, workOrderDTO);
+        Order order = orderService.modifyOrder(id, orderDTO);
         logger.info("Final modifyOrder");
-        return new ResponseEntity<>(workOrder, HttpStatus.OK);
+        return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
 

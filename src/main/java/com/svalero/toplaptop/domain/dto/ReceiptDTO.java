@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class ReceiptDTO {
 
-    private long workOrder;
+    private long orde;
     private double price;
     private double discount;
     private LocalDate date;

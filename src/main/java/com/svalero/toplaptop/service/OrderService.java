@@ -1,6 +1,7 @@
 package com.svalero.toplaptop.service;
 
-import com.svalero.toplaptop.domain.WorkOrder;
+import com.svalero.toplaptop.domain.Order;
+import com.svalero.toplaptop.domain.dto.OrderDTO;
 import com.svalero.toplaptop.exception.ComputerNotFoundException;
 import com.svalero.toplaptop.exception.OrderNotFoundException;
 import com.svalero.toplaptop.exception.TechnicalNotFoundException;
@@ -9,14 +10,14 @@ import java.util.List;
 
 public interface OrderService {
 
-    List<WorkOrder> findAll();
+    List<Order> findAll();
 
-    WorkOrder findById(long id) throws OrderNotFoundException;
+    Order findById(long id) throws OrderNotFoundException;
 
-    WorkOrder addOrder(com.svalero.toplaptop.domain.dto.WorkOrderDTO workOrderDTO) throws ComputerNotFoundException, TechnicalNotFoundException;
+    Order addOrder(OrderDTO orderDTO) throws ComputerNotFoundException, TechnicalNotFoundException;
 
-    WorkOrder deleteOrder(long id) throws OrderNotFoundException;
+    Order deleteOrder(long id) throws OrderNotFoundException;
 
-    WorkOrder modifyOrder(long id, com.svalero.toplaptop.domain.dto.WorkOrderDTO workOrderDTO) throws OrderNotFoundException, ComputerNotFoundException, TechnicalNotFoundException;
+    Order modifyOrder(long id, OrderDTO orderDTO) throws OrderNotFoundException, ComputerNotFoundException, TechnicalNotFoundException;
 
 }

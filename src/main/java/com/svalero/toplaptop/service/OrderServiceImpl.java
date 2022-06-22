@@ -1,6 +1,7 @@
 package com.svalero.toplaptop.service;
 
-import com.svalero.toplaptop.domain.WorkOrder;
+import com.svalero.toplaptop.domain.Order;
+import com.svalero.toplaptop.domain.dto.OrderDTO;
 import com.svalero.toplaptop.exception.ComputerNotFoundException;
 import com.svalero.toplaptop.exception.OrderNotFoundException;
 import com.svalero.toplaptop.exception.TechnicalNotFoundException;
@@ -23,52 +24,52 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private TechnicalRepository technicalRepository;
 
-    public List<WorkOrder> findAll() {
+    public List<Order> findAll() {
         return orderRepository.findAll();
     }
 
     @Override
-    public WorkOrder findById(long id) throws OrderNotFoundException {
+    public Order findById(long id) throws OrderNotFoundException {
         return orderRepository.findById(id).orElseThrow(OrderNotFoundException::new);
     }
 
     @Override
-    public WorkOrder addOrder(com.svalero.toplaptop.domain.dto.WorkOrderDTO workOrderDTO) throws ComputerNotFoundException, TechnicalNotFoundException {
+    public Order addOrder(OrderDTO orderDTO) throws ComputerNotFoundException, TechnicalNotFoundException {
         ModelMapper mapper = new ModelMapper();
-        WorkOrder workOrder = mapper.map(workOrderDTO, WorkOrder.class);
+        Order order = mapper.map(orderDTO, Order.class);
 
-        workOrder.setComputer(computerRepository.findById(workOrderDTO.getComputer())
+        order.setComputer(computerRepository.findById(orderDTO.getComputer())
                 .orElseThrow(ComputerNotFoundException::new));
 
-        workOrder.setTechnical(technicalRepository.findById(workOrderDTO.getTechnical())
+        order.setTechnical(technicalRepository.findById(orderDTO.getTechnical())
                 .orElseThrow(TechnicalNotFoundException::new));
 
-        orderRepository.save(workOrder);
-        return workOrder;
+        orderRepository.save(order);
+        return order;
     }
 
-    public WorkOrder deleteOrder(long id) throws OrderNotFoundException {
-        WorkOrder workOrder = orderRepository.findById(id).orElseThrow(OrderNotFoundException::new);
+    public Order deleteOrder(long id) throws OrderNotFoundException {
+        Order order = orderRepository.findById(id).orElseThrow(OrderNotFoundException::new);
 
-        orderRepository.delete(workOrder);
-        return workOrder;
+        orderRepository.delete(order);
+        return order;
     }
 
     @Override
-    public WorkOrder modifyOrder(long id, com.svalero.toplaptop.domain.dto.WorkOrderDTO workOrderDTO) throws OrderNotFoundException, ComputerNotFoundException, TechnicalNotFoundException {
+    public Order modifyOrder(long id, OrderDTO orderDTO) throws OrderNotFoundException, ComputerNotFoundException, TechnicalNotFoundException {
         orderRepository.findById(id).orElseThrow(OrderNotFoundException::new);
 
         ModelMapper mapper = new ModelMapper();
-        WorkOrder workOrder = mapper.map(workOrderDTO, WorkOrder.class);
+        Order order = mapper.map(orderDTO, Order.class);
 
-        workOrder.setId(id);
-        workOrder.setComputer(computerRepository.findById(workOrderDTO.getComputer())
+        order.setId(id);
+        order.setComputer(computerRepository.findById(orderDTO.getComputer())
                 .orElseThrow(ComputerNotFoundException::new));
 
-        workOrder.setTechnical(technicalRepository.findById(workOrderDTO.getTechnical())
+        order.setTechnical(technicalRepository.findById(orderDTO.getTechnical())
                 .orElseThrow(TechnicalNotFoundException::new));
 
-        orderRepository.save(workOrder);
-        return workOrder;
+        orderRepository.save(order);
+        return order;
     }
 }
