@@ -30,7 +30,7 @@ public class ComputerController {
     private ComputerService computerService;
 
     private final Logger logger = LoggerFactory.getLogger(ComputerController.class);
-/*
+
     @GetMapping("/computers")
     public ResponseEntity<Flux<Computer>> findAll() {
         logger.info("Inicio findAll computers");
@@ -40,7 +40,7 @@ public class ComputerController {
     }
 
 
- */
+
     @GetMapping("/computer/{id}")
     public ResponseEntity<Mono<Computer>> findById(@PathVariable long id) throws ComputerNotFoundException {
         logger.info("Inicio findById computers");
@@ -49,15 +49,15 @@ public class ComputerController {
         return new ResponseEntity<>(computer, HttpStatus.OK);
     }
 
-    @GetMapping("/computers")
-    public ResponseEntity<Flux<Computer>> findAllByBrand(@RequestParam(name = "brand", defaultValue ="1") String brand) {
+    @GetMapping("/computersbrand")
+    public ResponseEntity<Flux<Computer>> findAllByBrand(@RequestParam(name = "brand", defaultValue = "" ) String brand) {
         Flux<Computer> computers;
 
-        if (brand == "1") {
-            computers = computerService.findAll();
-        } else {
+       // if (brand == "") {
+       //     computers = computerService.findAll();
+      //  } else {
             computers = computerService.findAll(brand);
-        }
+      //  }
         return ResponseEntity.ok(computers);
     }
 
