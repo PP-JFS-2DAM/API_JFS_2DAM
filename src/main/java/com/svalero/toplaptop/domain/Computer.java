@@ -16,12 +16,11 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(value = "computer")
-public class Computer extends User {
+@Document(value = "computers")
+public class Computer  {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private String id;
     @Field
     @NotBlank
     private String brand;
@@ -35,11 +34,13 @@ public class Computer extends User {
     @Lob
     @Value("null")
     private byte[] computerImage;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference(value = "user-computer")
     private User user;
+
     @OneToMany(mappedBy = "computer")
-    @JsonBackReference(value = "computer-order")
     private List<Order> orders;
 
 

@@ -1,5 +1,6 @@
 package com.svalero.toplaptop.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,12 +15,12 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(value = "order")
+@Document(value = "orders")
 public class Order  {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+
+    private String id;
     @Field(name = "order_date")
     @NotNull
     private LocalDate orderDate;
@@ -27,9 +28,11 @@ public class Order  {
     private String description;
     @ManyToOne
     @JoinColumn(name = "technical_id")
+    @JsonBackReference(value = "technical-order")
     private Technical technical;
     @ManyToOne
-    @JoinColumn(name = "computer")
+    @JoinColumn(name = "computer_id")
+    @JsonBackReference(value = "computer-order")
     private Computer computer;
 
 

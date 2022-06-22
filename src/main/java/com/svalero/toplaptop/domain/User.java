@@ -16,13 +16,13 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(value = "user")
+@Document(value = "users")
 
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+
+    private String id;
     @Field
     @NotBlank
     private String name;
@@ -49,6 +49,5 @@ public class User {
     private byte[] userImage;
 
     @OneToMany(mappedBy = "user")
-    @JsonBackReference(value = "user-computer")
     private List<Computer> computers;
 }

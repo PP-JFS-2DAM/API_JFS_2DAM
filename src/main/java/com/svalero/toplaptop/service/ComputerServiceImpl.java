@@ -57,7 +57,8 @@ public class ComputerServiceImpl implements ComputerService {
         Mono<User> user = userRepository.findById(computerDTO.getUser()).onErrorReturn(new User());
 
 
-        computer.block().setId(id);
+
+      //  computer.block().setUser(userRepository.findById(computerDTO.getUser()));
         computer.block().setUser(user.block());
 
         computerRepository.save(computer.block());

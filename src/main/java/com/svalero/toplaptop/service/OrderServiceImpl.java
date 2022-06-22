@@ -69,7 +69,7 @@ public class OrderServiceImpl implements OrderService {
         Mono<Computer> computer = computerRepository.findById(orderDTO.getComputer()).onErrorReturn(new Computer());
         Mono<Order> order = orderRepository.findById(id).onErrorReturn(new Order());
 
-        order.block().setId(id);
+
         order.block().setComputer(computer.block());
        order.block().setTechnical(technical.block());
 

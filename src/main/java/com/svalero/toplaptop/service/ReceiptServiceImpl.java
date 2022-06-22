@@ -59,7 +59,7 @@ public class ReceiptServiceImpl implements ReceiptService {
         Mono<Order> order = orderRepository.findById(receiptDTO.getOrder()).onErrorReturn(new Order());
 
 
-        receipt.block().setId(id);
+
         receipt.block().setOrder(order.block());
 
 

@@ -14,12 +14,12 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(value = "receipt")
+@Document(value = "receipts")
 public class Receipt {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+
+    private String id;
 
     @Field
     @Value("0")

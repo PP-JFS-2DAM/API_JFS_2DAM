@@ -15,11 +15,11 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(value = "technical")
+@Document(value = "technicals")
 public class Technical {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+
+    private String id;
     @Field
     @NotBlank
     private String name;
@@ -34,7 +34,6 @@ public class Technical {
     private boolean isAvailable;
 
     @OneToMany(mappedBy = "technical")
-    @JsonBackReference(value = "technical-order")
     private List<Order> orders;
 
 }

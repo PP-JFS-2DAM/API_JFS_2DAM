@@ -40,7 +40,7 @@ public class TechnicalServiceImpl implements TechnicalService {
     public Mono<Technical> modifyTechnical(long id, Technical technical) throws TechnicalNotFoundException {
         technicalRepository.findById(id).onErrorReturn(new Technical());
 
-        technical.setId(id);
+
 
 
         return technicalRepository.save(technical);
