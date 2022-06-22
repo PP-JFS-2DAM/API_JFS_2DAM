@@ -40,7 +40,7 @@ public class User {
     //@Value("0")
     //@NotNull
     @Column
-    private float longitud;
+    private float longitude;
     //@Value("null")
     @Lob
     @Column
