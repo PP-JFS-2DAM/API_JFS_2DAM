@@ -32,7 +32,7 @@ public class Technical {
     private boolean isAvailable;
 
     @OneToMany(mappedBy = "technical")
-    @JsonBackReference(value = "technical-order")
-    private List<Order> orders;
+    @JsonBackReference(value = "technical-work_order")
+    private List<WorkOrder> workOrders;
 
 }

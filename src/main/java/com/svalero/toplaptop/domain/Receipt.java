@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Data
@@ -30,7 +29,7 @@ public class Receipt {
 
     @OneToOne
     @JoinColumn(name = "order_id")
-    private Order order;
+    private WorkOrder workorder;
 
 
 }

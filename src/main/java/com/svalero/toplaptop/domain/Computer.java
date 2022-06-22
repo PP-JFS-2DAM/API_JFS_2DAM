@@ -36,7 +36,7 @@ public class Computer {
     @JoinColumn(name = "user_id")
     private User user;
     @OneToMany(mappedBy = "computer")
-    @JsonBackReference(value = "computer-order")
-    private List<Order> orders;
+    @JsonBackReference(value = "computer-work_order")
+    private List<WorkOrder> workOrders;
 
 }
