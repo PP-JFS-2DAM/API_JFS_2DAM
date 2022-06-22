@@ -11,4 +11,5 @@ public interface ComputerRepository extends CrudRepository<Computer, Long> {
 
     List<Computer> findAll();
 
+    List<Computer> findByBrandContainingOrModelContainingOrRamContaining(String brand, String model, String ram);
 }

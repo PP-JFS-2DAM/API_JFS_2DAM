@@ -11,6 +11,8 @@ public interface ComputerService {
 
     List<Computer> findAll();
 
+    List<Computer> findAll(String brand, String model, String ram);
+
     Computer findById(long id) throws ComputerNotFoundException;
 
     Computer addComputer(ComputerDTO computerDTO) throws UserNotFoundException;
