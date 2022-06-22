@@ -30,10 +30,9 @@ public class Computer {
     @Column
     @NotBlank
     private String ram;
-    @Column
     @Lob
-    @Value("null")
-    private byte[] computerImage;
+    @Column
+    private String computerImage;
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_id")
