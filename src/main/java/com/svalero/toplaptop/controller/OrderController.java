@@ -1,10 +1,8 @@
 package com.svalero.toplaptop.controller;
 
 import com.svalero.toplaptop.domain.Order;
-import com.svalero.toplaptop.domain.Order;
 import com.svalero.toplaptop.domain.dto.OrderDTO;
 import com.svalero.toplaptop.exception.*;
-import com.svalero.toplaptop.service.OrderService;
 import com.svalero.toplaptop.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +29,7 @@ public class OrderController {
 
     @GetMapping("/orders")
     public ResponseEntity<List<Order>> findAll() {
-        logger.info("Inicio findAll orders");
+        logger.info("Inicio findAll work_orders");
         List<Order> orders = orderService.findAll();
         logger.info("Final findAll orders");
         return new ResponseEntity<>(orders, HttpStatus.OK);
@@ -41,7 +39,7 @@ public class OrderController {
     public ResponseEntity<Order> findById(@PathVariable long id) throws OrderNotFoundException {
         logger.info("Inicio findById orders");
         Order order = orderService.findById(id);
-        logger.info("Final findById orders");
+        logger.info("Final findById ordes");
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
