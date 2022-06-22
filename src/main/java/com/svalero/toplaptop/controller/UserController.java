@@ -55,7 +55,7 @@ public class UserController {
 
     @PostMapping("/user")
     public ResponseEntity<User> addUser(@Valid @RequestBody User user)   {
-        logger.info("Inicio addUser");
+        logger.info("Inicio addUser" + user.getUserImage());
         User newUser = userService.addUser(user);
         logger.info("Final addUser");
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);

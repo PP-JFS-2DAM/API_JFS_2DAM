@@ -30,21 +30,21 @@ public class User {
     @Column
     @NotBlank
     private String dni;
-    @Column(name = "vip_user")
-    @Value("false")
+    //@Value("false")
+    @Column
     private boolean vip;
+    //@Value("0")
+    //@NotNull
     @Column
-    @NotNull
-    @Value("0")
     private float latitude;
+    //@Value("0")
+    //@NotNull
     @Column
-    @NotNull
-    @Value("0")
     private float longitud;
-    @Column
+    //@Value("null")
     @Lob
-    @Value("null")
-    private byte[] userImage;
+    @Column
+    private String userImage;
 
     @OneToMany(mappedBy = "user")
     @JsonBackReference(value = "user-computer")

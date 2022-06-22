@@ -28,15 +28,14 @@ public class Computer {
     @Column
     @NotBlank
     private String ram;
-    @Column
     @Lob
-    @Value("null")
-    private byte[] computerImage;
+    @Column
+    private String computerImage;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
     @OneToMany(mappedBy = "computer")
-    @JsonBackReference(value = "computer-order")
+    @JsonBackReference(value = "computer-work_order")
     private List<Order> orders;
 
 }
