@@ -14,7 +14,7 @@ public interface OrderService {
 
     List<Order> findAll();
 
-    List<Order> findAll(LocalDate orderDate, String description);
+    List<Order> findAll(String nameSurname, String brandModel) ;
 
     Order findById(long id) throws OrderNotFoundException;
 

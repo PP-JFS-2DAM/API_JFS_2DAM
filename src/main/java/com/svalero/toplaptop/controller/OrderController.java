@@ -27,7 +27,7 @@ public class OrderController {
     private OrderService orderService;
 
     private final Logger logger = LoggerFactory.getLogger(OrderController.class);
-
+/*
     @GetMapping("/orders")
     public ResponseEntity<List<Order>> findAll() {
         logger.info("Inicio findAll work_orders");
@@ -37,21 +37,23 @@ public class OrderController {
     }
 
 
+ */
+
     @GetMapping("/orders")
-    public ResponseEntity<List<Order>> findAll(@RequestParam(name = "orderDate", required = false) LocalDate orderDate,
-                                               @RequestParam(name = "description", required = false) String description,
-                                               @RequestParam(name = "all", defaultValue = "false") boolean all) {
+    public List<Order> findAll(@RequestParam(name = "name_surname", required = false) String nameSurname,
+                                     @RequestParam(name = "brand_model", required = false) String brandModel,
+                                     @RequestParam(name = "all", defaultValue = "false") boolean all) {
         List<Order> orders;
-        logger.info("Inicio findAll orders");
+        logger.info("Inicio getOrders");
         if (all) {
-            logger.info("Mostrado de todos las ordenes");
+            logger.info("Mostrado de todas las órdenes");
             orders = orderService.findAll();
         } else {
-            logger.info("Filtrado por orderDate, description");
-            orders = orderService.findAll(orderDate, description);
+            logger.info("Filtrado por parámetro: name_surname=" + nameSurname + "// brand_model=" + brandModel );
+            orders = orderService.findAll(nameSurname, brandModel);
         }
-        logger.info("Final findAll orders");
-        return new ResponseEntity<>(orders, HttpStatus.OK);
+        logger.info("Fin getOrders");
+        return orders;
     }
 
     @GetMapping("/order/{id}")

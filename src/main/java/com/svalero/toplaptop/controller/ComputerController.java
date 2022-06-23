@@ -47,6 +47,9 @@ public class ComputerController {
         return new ResponseEntity<>(computers, HttpStatus.OK);
     }
 
+
+
+
     @GetMapping("/computer/{id}")
     public ResponseEntity<Computer> findById(@PathVariable long id) throws ComputerNotFoundException {
         logger.info("Inicio findById computers");

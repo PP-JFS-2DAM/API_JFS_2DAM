@@ -34,11 +34,13 @@ public class OrderServiceImpl implements OrderService {
     public Order findById(long id) throws OrderNotFoundException {
         return orderRepository.findById(id).orElseThrow(OrderNotFoundException::new);
 
+
     }
 
+
     @Override
-    public List<Order> findAll(LocalDate orderDate, String description) {
-        return orderRepository.findByOrderDateContainingOrDescription(orderDate, description);
+    public List<Order> findAll(String nameSurname, String brandModel) {
+        return orderRepository.findByComputer_BrandContainingOrComputer_ModelContainingOrComputer_User_NameContainingOrComputer_User_SurnameContaining(nameSurname, brandModel);
     }
 
     @Override
