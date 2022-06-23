@@ -47,6 +47,7 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
+
     @GetMapping("/user/{id}")
     public ResponseEntity<User> findById(@PathVariable long id) throws UserNotFoundException {
         logger.info("Inicio findById users");
