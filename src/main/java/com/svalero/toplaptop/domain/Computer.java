@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.beans.factory.annotation.Value;
 
 
@@ -29,15 +31,15 @@ public class Computer {
     @Column
     @NotBlank
     private String ram;
-    @Column
     @Lob
-    @Value("null")
-    private byte[] computerImage;
+    @Column
+    private String computerImage;
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_id")
     private User user;
     @OneToMany(mappedBy = "computer")
-    @JsonBackReference(value = "computer-order")
+    @JsonBackReference(value = "computer-work_order")
     private List<Order> orders;
 
 }

@@ -1,5 +1,6 @@
 package com.svalero.toplaptop.service;
 
+import com.svalero.toplaptop.domain.Computer;
 import com.svalero.toplaptop.domain.Order;
 import com.svalero.toplaptop.domain.dto.OrderDTO;
 import com.svalero.toplaptop.exception.ComputerNotFoundException;
@@ -12,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -31,6 +33,12 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order findById(long id) throws OrderNotFoundException {
         return orderRepository.findById(id).orElseThrow(OrderNotFoundException::new);
+
+    }
+
+    @Override
+    public List<Order> findAll(LocalDate orderDate, String description) {
+        return orderRepository.findByOrderDateContainingOrDescription(orderDate, description);
     }
 
     @Override

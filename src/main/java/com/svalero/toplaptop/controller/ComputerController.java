@@ -30,9 +30,19 @@ public class ComputerController {
     private final Logger logger = LoggerFactory.getLogger(ComputerController.class);
 
     @GetMapping("/computers")
-    public ResponseEntity<List<Computer>> findAll() {
+    public ResponseEntity<List<Computer>> findAll(@RequestParam(name = "brand", required = false) String brand,
+                                                  @RequestParam(name = "model", required = false) String model,
+                                                  @RequestParam(name = "ram", required = false) String ram,
+                                                  @RequestParam(name = "all", defaultValue = "false") boolean all) {
+        List<Computer> computers;
         logger.info("Inicio findAll computers");
-        List<Computer> computers = computerService.findAll();
+        if (all) {
+            logger.info("Mostrado de todos los ordenadores");
+            computers = computerService.findAll();
+        } else {
+            logger.info("Filtrado por brand, model, ram");
+            computers = computerService.findAll(brand, model, ram);
+        }
         logger.info("Final findAll computers");
         return new ResponseEntity<>(computers, HttpStatus.OK);
     }

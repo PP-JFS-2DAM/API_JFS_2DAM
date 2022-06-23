@@ -10,6 +10,6 @@ public class ComputerDTO {
     private String brand;
     private String model;
     private String ram;
-    private byte[] computerImage;
+    private String computerImage;
     private long user;
 }

@@ -18,6 +18,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
+    @Override
+    public List<User> findAll(String name, String surname, String dni) {
+        return userRepository.findByNameContainingOrSurnameContainingOrDniContaining(name, surname, dni);
+    }
+
     public User findById(long id) throws UserNotFoundException {
         return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }
@@ -27,11 +32,10 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    public User deleteUser(long id) throws UserNotFoundException {
+    public void deleteUser(long id) throws UserNotFoundException {
         User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
 
         userRepository.delete(user);
-        return user;
     }
 
     public User modifyUser(long id, User newUser) throws UserNotFoundException {

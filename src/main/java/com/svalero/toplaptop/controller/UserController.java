@@ -28,9 +28,19 @@ public class UserController {
     private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/users")
-    public ResponseEntity<List<User>> findAll() {
+    public ResponseEntity<List<User>> findAll(@RequestParam(name = "name", required = false) String name,
+                                              @RequestParam(name = "surname", required = false) String surname,
+                                              @RequestParam(name = "dni", required = false) String dni,
+                                              @RequestParam(name = "all", defaultValue = "false") boolean all) {
+        List<User> users;
         logger.info("Inicio findAll users");
-        List<User> users = userService.findAll();
+        if (all) {
+            logger.info("Mostrado de todos los usuarios");
+            users = userService.findAll();
+        } else {
+            logger.info("Filtrado por name, surname, dni");
+            users=userService.findAll(name, surname, dni);
+        }
         logger.info("Final findAll users");
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
@@ -45,7 +55,7 @@ public class UserController {
 
     @PostMapping("/user")
     public ResponseEntity<User> addUser(@Valid @RequestBody User user)   {
-        logger.info("Inicio addUser");
+        logger.info("Inicio addUser" + user.getUserImage());
         User newUser = userService.addUser(user);
         logger.info("Final addUser");
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);

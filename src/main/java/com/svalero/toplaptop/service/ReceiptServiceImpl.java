@@ -33,7 +33,7 @@ public class ReceiptServiceImpl implements ReceiptService {
         ModelMapper mapper = new ModelMapper();
         Receipt receipt = mapper.map(receiptDTO, Receipt.class);
 
-        receipt.setOrder(orderRepository.findById(receiptDTO.getOrder())
+        receipt.setOrder(orderRepository.findById(receiptDTO.getOrde())
                 .orElseThrow(OrderNotFoundException::new));
 
         receiptRepository.save(receipt);
@@ -56,7 +56,7 @@ public class ReceiptServiceImpl implements ReceiptService {
         Receipt receipt = mapper.map(receiptDTO, Receipt.class);
 
         receipt.setId(id);
-        receipt.setOrder(orderRepository.findById(receiptDTO.getOrder())
+        receipt.setOrder(orderRepository.findById(receiptDTO.getOrde())
                 .orElseThrow(OrderNotFoundException::new));
 
         receiptRepository.save(receipt);
